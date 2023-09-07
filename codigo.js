@@ -68,6 +68,13 @@ function shippingType (ordenCompra) {
         
 }
 
+function filtrarPorPrecioMax (precioMaximo) {
+    const filtrados = productos.filter ((producto)=> producto.Precio < precioMaximo);
+    console.log (filtrados);
+    
+    }
+
+
 class OrdenDeCompra {
     constructor (nombreDeUsuario){
         this.nombreDeUsuario = nombreDeUsuario;
@@ -95,6 +102,15 @@ startMenu();
 
 shippingType(orden);
 
+filtrarPorPrecioMax ('');
+
+
+let precioUsuario = parseFloat (prompt ('Cuanto es el precio que usted esta dispuesto a pagar por las chapatitas')); 
+
+filtrarPorPrecioMax (precioUsuario);
+
+console.log = (precioUsuario);
+
 /*
 const baratos = producto.filter (producto => productos.precio < 3000);
 console.log (baratos);
@@ -106,18 +122,13 @@ const existe = productos.some (productos => productos.tipo === 'minnie');
 console.log (existe);
 */
 
-function filtrarPorPrecioMax (precioMaximo) {
-const filtrados = productos.filter ((producto)=> producto.Precio < precioMaximo);
-console.log (filtrados);
-
-}
-
-filtrarPorPrecioMax (3400);
 
 
 
 
 
+
+ /*
     console.log ('En 10 dias habiles le llegara su pedido al domicilio indicado, gracias por su compra')
 
 
@@ -140,4 +151,6 @@ const chapita6 = new Chapatita ('Donut','S','2500');
 
 */
 
-console.log (productos)
+
+
+
