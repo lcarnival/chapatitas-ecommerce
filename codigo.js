@@ -72,7 +72,13 @@ function filtrarPorPrecioMax (precioMaximo) {
     const filtrados = productos.filter ((producto)=> producto.Precio < precioMaximo);
     console.log (filtrados);
     
-    }
+}
+
+function filtrarPorTipo (contiene) {
+    const existe = productos.some (producto => producto.Tipo === contiene);
+    console.log (existe);
+    return existe
+}
 
 
 class OrdenDeCompra {
@@ -105,7 +111,17 @@ shippingType(orden);
 filtrarPorPrecioMax ('');
 
 
-let precioUsuario = parseFloat (prompt ('Cuanto es el precio que usted esta dispuesto a pagar por las chapatitas')); 
+
+
+let precioUsuario = parseFloat (prompt ('Cuanto es el precio que estas dispuesto a pagar por las chapatitas')); 
+
+let tipoUsuario = prompt('Que chapatita estas buscando?'); 
+
+let existeChapatita = filtrarPorTipo(tipoUsuario);
+
+if (!existeChapatita) {
+    console.log ('el producto que busca no existe');
+}
 
 filtrarPorPrecioMax (precioUsuario);
 
@@ -115,11 +131,10 @@ console.log = (precioUsuario);
 const baratos = producto.filter (producto => productos.precio < 3000);
 console.log (baratos);
 
-*/
-
-/*
-const existe = productos.some (productos => productos.tipo === 'minnie');
+const existe = productos.some (productos => productos.tipo === 'productos');
 console.log (existe);
+
+
 */
 
 
