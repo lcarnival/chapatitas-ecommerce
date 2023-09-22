@@ -1,0 +1,43 @@
+#completeTittle{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    margin-top: 20px;
+    gap: 20px;
+}
+
+
+
+#icons {
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+    margin-right: 30px;
+
+}
+
+#iniciar {
+
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+    margin-right: 30px;
+}
+
+#cartas {
+    display: flex;
+    justify-content: center;
+
+}
+
+#buscador {
+    display: flex;
+    justify-content: center;
+    padding: 15px;
+}
+
+.mainSection {
+    background: rgb(190,185,230);
+    background: linear-gradient(174deg, rgba(190,185,230,1) 0%, rgba(245,226,255,1) 100%);
+}

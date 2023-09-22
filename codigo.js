@@ -37,134 +37,279 @@ function startMenu() {
             default:
                 alert('La opcion no existe');
                 break;
-                        
+
         }
-    
+
         selectedOption = prompt('Ingrese opcion de chapita o 0 para salir');
-    
+
     }
 }
 
-function shippingType (ordenCompra) {
+function shippingType(ordenCompra) {
     let envio = ''
 
     do {
 
-        envio = prompt ('desea envio a domicilio? 1-SI 2-NO')
-    
+        envio = prompt('desea envio a domicilio? 1-SI 2-NO')
+
         if (envio == '1') {
             ordenCompra.envioADomicilio = true;
-            ordenCompra.direccionUsuario = prompt ('Ingrese su direccion'); 
-            
+            ordenCompra.direccionUsuario = prompt('Ingrese su direccion');
+
         } else if (envio == '2') {
             ordenCompra.envioADomicilio = false;
-        }  else {
-            alert ('La opcion es inexistente');
+        } else {
+            alert('La opcion es inexistente');
         }
-    
-        } while (envio != '1' && envio != '2');
+
+    } while (envio != '1' && envio != '2');
+
+    console.log(ordenCompra);
+
+}
+
+function crearCards(productos) {
+    let obtenerCards = document.getElementById('cartas');
+    obtenerCards.innerHTML = '';
+    for (const producto of productos) {
+        obtenerCards.innerHTML += `
+            <div class="card" style="width: 18rem;">
+    <img src="${producto.Foto}" class="card-img-top" alt="...">
+    <div class="card-body">
+        <h5 class="card-title">${producto.Tipo}</h5>
+        <p class="card-text">${producto.Talle}.</p>
+        <p class="card-text">${producto.Precio}.</p>
+        <button onclick="orden.agregarAlCarrito('${producto.Tipo}','${producto.Talle[0]}', ${producto.Precio})" class="btn btn-primary">Agregar al carrito</button>
+        <button onclick="orden.agregarAlCarrito('${producto.Tipo}','${producto.Talle[0]}', ${producto.Precio})" class="btn btn-primary">Comprar</button>
+    </div>
+    </div>
         
-        console.log(ordenCompra);
-        
-}
+        `;
 
-function filtrarPorPrecioMax (precioMaximo) {
-    const filtrados = productos.filter ((producto)=> producto.Precio < precioMaximo);
-    console.log (filtrados);
-    
-}
+    }
 
-function filtrarPorTipo (contiene) {
-    const existe = productos.some (producto => producto.Tipo === contiene);
-    console.log (existe);
-    return existe
 }
 
 
-class OrdenDeCompra {
-    constructor (nombreDeUsuario){
+function filtrarPorPrecioMax(precioMaximo) {
+    if (precioMaximo == null) {
+        return productos
+    }
+    const filtrados = productos.filter((producto) => producto.Precio < precioMaximo);
+    console.log(filtrados);
+    return filtrados;
+}
+
+
+function filtrarPorTipo(contiene) {
+    const existe = productos.some(producto => producto.Tipo === contiene);
+    console.log(existe);
+    return existe;
+}
+
+function filtrarPorNombre (nombre,losProductos) {
+    const chapatitasResultado = losProductos.filter ((producto) => producto.Tipo === nombre);
+    return chapatitasResultado;
+}
+
+
+
+
+
+class OrdenDeCompra { 
+    constructor(nombreDeUsuario) {
         this.nombreDeUsuario = nombreDeUsuario;
         this.envioADomicilio = false;
         this.direccionUsuario = '';
         this.tipoDePago = '';
         this.carritoDeCompra = [];
     }
+
+    agregarAlCarrito(tipo,talle,precio) {
+        
+        let producto  = {
+            tipo: tipo,
+            talle: talle,
+            precio:precio 
+        }
+
+        this.carritoDeCompra.push(producto);
+        const badgeCart = document.getElementById('cargaProductos');
+        badgeCart.innerHTML = this.carritoDeCompra.length;
+        localStorage.setItem ('tuCarrito', JSON.stringify (productos));
+    }
+
+    getCostoChapatita() {
+        let total = 0;
+        //debugger;
+        for (let i = 0; i < this.carritoDeCompra.length; i++) {
+            total = total + this.carritoDeCompra[i].precio;
+        }
+        return total;
+
+    }
+
+    vaciarCarrito () {
+
+        this.carritoDeCompra = [];
+        const badgeCart = document.getElementById('cargaProductos');
+        badgeCart.innerHTML = this.carritoDeCompra.length;
+
+    }
+
+
 }
 
 
 
-let nombre = prompt('Ingresa tu nombre');
+const orden = new OrdenDeCompra('');
 
-const orden = new OrdenDeCompra(nombre);
-
-let saludo = 'Hola ' + nombre;
-alert(saludo);
-
-alert('Aqui encontraras las opciones de chapitas para que elijas la que mas te guste:')
-
-printMenu();
-
-startMenu();
-
-shippingType(orden);
-
-filtrarPorPrecioMax ('');
+const botonCarrito = document.getElementById ('carrito');
+botonCarrito.onclick = () => alert(orden.getCostoChapatita());
 
 
-
-
-let precioUsuario = parseFloat (prompt ('Cuanto es el precio que estas dispuesto a pagar por las chapatitas')); 
-
-let tipoUsuario = prompt('Que chapatita estas buscando?'); 
-
-let existeChapatita = filtrarPorTipo(tipoUsuario);
-
-if (!existeChapatita) {
-    console.log ('el producto que busca no existe');
+let carritoVacio = document.getElementById ('vaciarCarrito');
+carritoVacio.onclick = () => { 
+    orden.vaciarCarrito ()
+    alert ('Vaciaste tu carrito de compra');
 }
 
-filtrarPorPrecioMax (precioUsuario);
 
-console.log = (precioUsuario);
+
+
+
+function setElementOnClick (id,clickear) {
+
+    let boton = document.getElementById (id);
+    boton.onclick = clickear
+       
+}
+
+
+setElementOnClick ('search', ()  => alert ('hiciste click'));
+
+//setElementOnClick ('iniciar', () =>  alert ('hiciste otro click'));
+
+//setElementOnClick ('iniciar', () => style.display ) = "block";
+
+
+
+
+
+function setElementOnKeyUp (id,pressKey) {
+
+    const inputModelo = document.getElementById (id);
+    inputModelo.onkeyup = pressKey
+       
+}
+
+const write = () => { 
+
+    const modelo = document.getElementById ('categoria')
+
+    if (modelo.value.length < 3) {
+        console.log('No existe un modelo que tenga 3 letras');
+        modelo.style.color = 'red';
+    } else {
+       modelo.style.color = 'black';
+    }
+
+
+}
+
+setElementOnKeyUp ('categoria', write);
+
+
+
+const datos= () => {
+
+const campoMail = document.getElementById ('mail')
+
+if ((!campoMail.value.includes('@')) || (!campoMail.value.includes ('.'))) {
+    alert ('ingrese un mail valido') ;
+ } else {
+        alert ('mail correcto');
+
+    }
+
+}
+setElementOnKeyUp ('mail',datos);
 
 /*
-const baratos = producto.filter (producto => productos.precio < 3000);
-console.log (baratos);
+const CampoModelo = document.getElementById('categoria');
 
-const existe = productos.some (productos => productos.tipo === 'productos');
-console.log (existe);
-
-
-*/
-
-
-
-
-
-
-
- /*
-    console.log ('En 10 dias habiles le llegara su pedido al domicilio indicado, gracias por su compra')
-
-
-    /*
-
-    class Chapatita {
-    constructor (modelo, tamaño, precio) {
-        this.modelo = modelo;
-        this.tamaño = tamaño;
-        this.precio = precio;
+CampoModelo.onkeyup = () => {
+    if (CampoModelo.value.length < 3) {
+        console.log('No existe un modelo que tenga 3 letras');
+        CampoModelo.style.color = 'red';
+    } else {
+        CampoModelo.style.color = 'black';
     }
+
 }
 
-const chapita1 = new Chapatita ('Minnie','M','3500');
-const chapita2 = new Chapatita ('Mickey','L', '3500');
-const chapita3 = new Chapatita ('Arnold','S','4000');
-const chapita4 = new Chapatita ('Mora','XL','3000');
-const chapita5 = new Chapatita ('Stich','XL','5000');
-const chapita6 = new Chapatita ('Donut','S','2500');
-
 */
+
+let boton = document.getElementById ('search');
+boton.onmouseover = () => boton.style.background = '#FF8166';
+boton.onmouseout = () => boton.style.background  = '';
+const searchOnClick = () => { 
+    const input = document.getElementById ('categoria');
+    
+
+    if (input.value === null || input.value === '' || input.value === undefined) {
+        crearCards (productos)
+
+    } else { 
+        const resultadoBusqueda = filtrarPorNombre (input.value,productos);
+        crearCards (resultadoBusqueda);
+    }
+    
+}
+
+setElementOnClick ('search',searchOnClick);
+
+
+
+   /* // EJEMPLO 1
+
+   
+
+setElementOnClick("carrito", () => alert("Haz hecho click en este elemento"));
+
+// EJEMPLO 2
+setElementOnClick("carrito", () => {
+console.log("Correcto hiciste click");
+alert("Haz hecho click en este elemento");
+});
+
+
+//EJEMPLO 3
+const funcClickCarrito = () => {
+console.log("Correcto hiciste click");
+alert("Haz hecho click en este elemento");
+};
+setElementOnClick("#carrito", funcClickCarrito);
+*/
+
+
+
+
+let titulo = document.getElementById('mainTitle');
+titulo.style.color = 'black';
+
+let obtenerCards = document.getElementById('cartas');
+obtenerCards.classList.add('container-fluid');
+obtenerCards.classList.add('gap-3');
+
+
+
+
+
+
+
+
+crearCards(productos);
 
 
 

@@ -1,45 +1,66 @@
 const productos = [{
     Tipo: 'Mickey', 
-    Talle: ['m','l','xl'],
+    Talle: ['M','L','XL'],
     Precio: 4000,
+    Foto: './img/IMG_3234.jpg'
 
 },
 
 { 
     Tipo: 'Minnie', 
-    Talle: ['xs','l','xl'],
+    Talle: ['XS','L','XL'],
     Precio: 3500,
+    Foto: './img/IMG_3233.jpg'
+
 
 },
 
 {
     Tipo: 'Arnold', 
-    Talle: ['s','m','xxl'],
-    Precio: 4000,
+    Talle: ['S','M','XXL'],
+    Precio:  4000,
+    Foto: './img/IMG_3236.jpg'
 
 },
 
 {
     Tipo: 'Mora', 
-    Talle: ['xs','s','xl'],
+    Talle: ['XS','S','XL'],
     Precio: 2900,
-
+    Foto: './img/IMG_3237.jpg'
 },
 
 {
     Tipo: 'Stich', 
-    Talle: ['xs','s','m','l'],
+    Talle: ['XS','S','M','L'],
     Precio: 5200,
+    Foto: './img/IMG_3235.jpg'
 
 },
 
 {
     Tipo: 'Donut', 
-    Talle: ['xs','s','m','l','xl'],
+    Talle: ['XS','S','M','L','XL'],
     Precio: 4900,
+    Foto: './img/IMG_3238.jpg'
 
 },
 
+{
+    Tipo: 'Dobby', 
+    Talle: ['XS','S','M','L'],
+    Precio: 4750,
+    Foto: './img/IMG_3240.jpg'
+
+},
+
+{
+    Tipo: 'Heroes', 
+    Talle: ['S','M','L','XL','XXL'],
+    Precio: 5100,
+    Foto: './img/IMG_3239.jpg'
+
+}
 
 ];
 
