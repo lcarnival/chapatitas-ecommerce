@@ -107,8 +107,8 @@ function filtrarPorTipo(contiene) {
     return existe;
 }
 
-function filtrarPorNombre (nombre,losProductos) {
-    const chapatitasResultado = losProductos.filter ((producto) => producto.Tipo === nombre);
+function filtrarPorNombre(nombre, losProductos) {
+    const chapatitasResultado = losProductos.filter((producto) => producto.Tipo === nombre);
     return chapatitasResultado;
 }
 
@@ -116,7 +116,7 @@ function filtrarPorNombre (nombre,losProductos) {
 
 
 
-class OrdenDeCompra { 
+class OrdenDeCompra {
     constructor(nombreDeUsuario) {
         this.nombreDeUsuario = nombreDeUsuario;
         this.envioADomicilio = false;
@@ -125,19 +125,38 @@ class OrdenDeCompra {
         this.carritoDeCompra = [];
     }
 
-    agregarAlCarrito(tipo,talle,precio) {
-        
-        let producto  = {
+    agregarAlCarrito(tipo, talle, precio) {
+
+        let producto = {
             tipo: tipo,
             talle: talle,
-            precio:precio 
+            precio: precio
         }
 
         this.carritoDeCompra.push(producto);
         const badgeCart = document.getElementById('cargaProductos');
         badgeCart.innerHTML = this.carritoDeCompra.length;
-        localStorage.setItem ('tuCarrito', JSON.stringify (productos));
+        localStorage.setItem('tuCarrito', JSON.stringify(this.carritoDeCompra));
+
+
+
     }
+
+
+    recuperarCarrito() {
+
+        let tuCarrito = JSON.parse(localStorage.getItem('tuCarrito'));
+
+        if (tuCarrito != null) {
+            this.carritoDeCompra = tuCarrito
+            const badgeCart = document.getElementById('cargaProductos');
+            badgeCart.innerHTML = this.carritoDeCompra.length;
+        }
+
+
+    }
+
+
 
     getCostoChapatita() {
         let total = 0;
@@ -149,148 +168,121 @@ class OrdenDeCompra {
 
     }
 
-    vaciarCarrito () {
+    vaciarCarrito() {
 
         this.carritoDeCompra = [];
         const badgeCart = document.getElementById('cargaProductos');
         badgeCart.innerHTML = this.carritoDeCompra.length;
+        localStorage.setItem('tuCarrito', JSON.stringify(this.carritoDeCompra));
+
 
     }
 
 
+
+
 }
+
 
 
 
 const orden = new OrdenDeCompra('');
 
-const botonCarrito = document.getElementById ('carrito');
+orden.recuperarCarrito();
+
+const botonCarrito = document.getElementById('carrito');
 botonCarrito.onclick = () => alert(orden.getCostoChapatita());
 
 
-let carritoVacio = document.getElementById ('vaciarCarrito');
-carritoVacio.onclick = () => { 
-    orden.vaciarCarrito ()
-    alert ('Vaciaste tu carrito de compra');
+let carritoVacio = document.getElementById('vaciarCarrito');
+carritoVacio.onclick = () => {
+    orden.vaciarCarrito()
+    alert('Vaciaste tu carrito de compra');
 }
 
 
 
 
 
-function setElementOnClick (id,clickear) {
 
-    let boton = document.getElementById (id);
+function setElementOnClick(id, clickear) {
+
+    let boton = document.getElementById(id);
     boton.onclick = clickear
-       
+
 }
 
 
-setElementOnClick ('search', ()  => alert ('hiciste click'));
-
-//setElementOnClick ('iniciar', () =>  alert ('hiciste otro click'));
-
-//setElementOnClick ('iniciar', () => style.display ) = "block";
+setElementOnClick ('login',() => { 
+    window.location.href = './login.html'
+} ) ;
 
 
+setElementOnClick('search', () => alert('hiciste click'));
 
 
 
-function setElementOnKeyUp (id,pressKey) {
 
-    const inputModelo = document.getElementById (id);
+function setElementOnKeyUp(id, pressKey) {
+
+    const inputModelo = document.getElementById(id);
     inputModelo.onkeyup = pressKey
-       
+
 }
 
-const write = () => { 
+const write = () => {
 
-    const modelo = document.getElementById ('categoria')
+    const modelo = document.getElementById('categoria')
 
     if (modelo.value.length < 3) {
         console.log('No existe un modelo que tenga 3 letras');
         modelo.style.color = 'red';
     } else {
-       modelo.style.color = 'black';
+        modelo.style.color = 'black';
     }
 
 
 }
 
-setElementOnKeyUp ('categoria', write);
+setElementOnKeyUp('categoria', write);
 
 
 
-const datos= () => {
+const datos = () => {
 
-const campoMail = document.getElementById ('mail')
+    const campoMail = document.getElementById('mail')
 
-if ((!campoMail.value.includes('@')) || (!campoMail.value.includes ('.'))) {
-    alert ('ingrese un mail valido') ;
- } else {
-        alert ('mail correcto');
-
-    }
-
-}
-setElementOnKeyUp ('mail',datos);
-
-/*
-const CampoModelo = document.getElementById('categoria');
-
-CampoModelo.onkeyup = () => {
-    if (CampoModelo.value.length < 3) {
-        console.log('No existe un modelo que tenga 3 letras');
-        CampoModelo.style.color = 'red';
+    if ((!campoMail.value.includes('@')) || (!campoMail.value.includes('.'))) {
+        alert('ingrese un mail valido');
     } else {
-        CampoModelo.style.color = 'black';
+        alert('mail correcto');
+
     }
 
 }
 
-*/
 
-let boton = document.getElementById ('search');
+
+
+let boton = document.getElementById('search');
 boton.onmouseover = () => boton.style.background = '#FF8166';
-boton.onmouseout = () => boton.style.background  = '';
-const searchOnClick = () => { 
-    const input = document.getElementById ('categoria');
-    
+boton.onmouseout = () => boton.style.background = '';
+const searchOnClick = () => {
+    const input = document.getElementById('categoria');
+
 
     if (input.value === null || input.value === '' || input.value === undefined) {
-        crearCards (productos)
+        crearCards(productos)
 
-    } else { 
-        const resultadoBusqueda = filtrarPorNombre (input.value,productos);
-        crearCards (resultadoBusqueda);
+    } else {
+        const resultadoBusqueda = filtrarPorNombre(input.value, productos);
+        crearCards(resultadoBusqueda);
     }
-    
+
 }
 
-setElementOnClick ('search',searchOnClick);
+setElementOnClick('search', searchOnClick);
 
-
-
-   /* // EJEMPLO 1
-
-   
-
-setElementOnClick("carrito", () => alert("Haz hecho click en este elemento"));
-
-// EJEMPLO 2
-setElementOnClick("carrito", () => {
-console.log("Correcto hiciste click");
-alert("Haz hecho click en este elemento");
-});
-
-
-//EJEMPLO 3
-const funcClickCarrito = () => {
-console.log("Correcto hiciste click");
-alert("Haz hecho click en este elemento");
-};
-setElementOnClick("#carrito", funcClickCarrito);
-*/
 
 
 
@@ -310,7 +302,3 @@ obtenerCards.classList.add('gap-3');
 
 
 crearCards(productos);
-
-
-
-
