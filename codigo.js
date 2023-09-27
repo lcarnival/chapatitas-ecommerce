@@ -202,7 +202,8 @@ carritoVacio.onclick = () => {
 
 
 
-
+let inicioSesion = localStorage.setItem ('usuario','this.nombreDeUsuario');
+console.log ('inicioSesion');
 
 
 function setElementOnClick(id, clickear) {
@@ -253,13 +254,19 @@ const datos = () => {
     const campoMail = document.getElementById('mail')
 
     if ((!campoMail.value.includes('@')) || (!campoMail.value.includes('.'))) {
-        alert('ingrese un mail valido');
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Ingrese un mail valido!',
+        
+          })
     } else {
-        alert('mail correcto');
+        alert('Mail correcto');
 
     }
 
 }
+
 
 
 
@@ -293,6 +300,7 @@ titulo.style.color = 'black';
 let obtenerCards = document.getElementById('cartas');
 obtenerCards.classList.add('container-fluid');
 obtenerCards.classList.add('gap-3');
+
 
 
 

@@ -35,9 +35,67 @@
     display: flex;
     justify-content: center;
     padding: 15px;
+    gap: 5px;
 }
 
 .mainSection {
     background: rgb(190,185,230);
     background: linear-gradient(174deg, rgba(190,185,230,1) 0%, rgba(245,226,255,1) 100%);
+}
+
+#inputs {
+  width: 30%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 30px;
+  gap: 10px;
+  
+}
+
+
+
+#buttons {
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 20%;
+    margin: 75px;
+    gap:10px;
+
+    
+} 
+
+
+
+#categoria {
+    border-radius: 10px;
+}
+
+
+#opCarrito {
+    display: flex;
+    flex-direction: column;
+}
+
+#avatar{
+    display: flex;
+    flex-direction: column;
+}
+
+#header {
+display: flex;
+flex-direction: row;
+justify-content: flex-end;
+margin-top: 0px;
+
+
+}
+
+.textIcons {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+
 }

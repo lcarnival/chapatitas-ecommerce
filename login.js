@@ -19,7 +19,7 @@ const datos = () => {
     if ((!campoMail.value.includes('@')) || (!campoMail.value.includes('.'))) {
         alert('Ingrese un mail valido');
     } else {
-        alert('mail correcto');
+        alert('Mail correcto');
         window.location.href = './index.html'
 
     }
