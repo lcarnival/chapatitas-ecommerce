@@ -202,8 +202,10 @@ carritoVacio.onclick = () => {
 
 
 
-let inicioSesion = localStorage.setItem ('usuario','this.nombreDeUsuario');
-console.log ('inicioSesion');
+localStorage.setItem('usuario', (this.nombreDeUsuario));
+let usuario = localStorage.getItem ('usuario');
+
+
 
 
 function setElementOnClick(id, clickear) {
@@ -287,6 +289,14 @@ const searchOnClick = () => {
     }
 
 }
+
+
+const create = () => {
+    window.location.href = './createAccount.html'
+}
+
+
+setElementOnClick ('createAccount',create);
 
 setElementOnClick('search', searchOnClick);
 
