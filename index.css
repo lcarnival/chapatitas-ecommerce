@@ -1,3 +1,7 @@
+
+
+
+
 #completeTittle{
     display: flex;
     flex-direction: row;
@@ -17,6 +21,12 @@
 
 }
 
+#createAccount {
+ margin: 30px;
+}
+
+
+
 #iniciar {
 
     display: flex;
@@ -28,6 +38,7 @@
 #cartas {
     display: flex;
     justify-content: center;
+    padding: 40px;
 
 }
 
@@ -53,6 +64,15 @@
   
 }
 
+.mainComponent {
+    padding: 0px 50px;
+}
+
+.table-container {
+    border: 1px solid rgb(221 221 221);
+    border-radius: 10px;
+    padding: 10px;
+}
 
 
 #buttons {
@@ -99,3 +119,23 @@ margin-top: 0px;
     gap: 10px;
 
 }
+
+.footerTittle {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}   
+
+.completeFooter {
+
+    background: rgb(190,185,230);
+    background: linear-gradient(174deg, rgba(190,185,230,1) 0%, rgba(245,226,255,1) 100%);
+
+}
+
+#nombreUsuario {
+    display: none;
+}
+
+#logOut {
+    display: none;
+}
+

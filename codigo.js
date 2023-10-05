@@ -79,9 +79,9 @@ function crearCards(productos) {
         <h5 class="card-title">${producto.Tipo}</h5>
         <p class="card-text">${producto.Talle}.</p>
         <p class="card-text">${producto.Precio}.</p>
-        <button onclick="orden.agregarAlCarrito('${producto.Tipo}','${producto.Talle[0]}', ${producto.Precio})" class="btn btn-primary">Agregar al carrito</button>
-        <button onclick="orden.agregarAlCarrito('${producto.Tipo}','${producto.Talle[0]}', ${producto.Precio})" class="btn btn-primary">Comprar</button>
-    </div>
+        <button onclick="orden.agregarAlCarrito('${producto.Tipo}','${producto.Talle[0]}', ${producto.Precio}, '${producto.Foto}')" class="btn btn-primary">Agregar al carrito</button>
+        <button onclick="orden.agregarAlCarrito('${producto.Tipo}','${producto.Talle[0]}', ${producto.Precio}, '${producto.Foto}')" class="btn btn-primary">Comprar</button>
+    </div
     </div>
         
         `;
@@ -125,38 +125,43 @@ class OrdenDeCompra {
         this.carritoDeCompra = [];
     }
 
-    agregarAlCarrito(tipo, talle, precio) {
+    agregarAlCarrito(tipo, talle, precio, foto) {
 
         let producto = {
             tipo: tipo,
             talle: talle,
-            precio: precio
+            precio: precio,
+            foto: foto
         }
 
         this.carritoDeCompra.push(producto);
         const badgeCart = document.getElementById('cargaProductos');
         badgeCart.innerHTML = this.carritoDeCompra.length;
         localStorage.setItem('tuCarrito', JSON.stringify(this.carritoDeCompra));
-
-
-
     }
-
 
     recuperarCarrito() {
 
         let tuCarrito = JSON.parse(localStorage.getItem('tuCarrito'));
+        let usuario = localStorage.getItem ('usuario');
+
+        if (usuario != null && usuario != undefined) {
+            this.nombreDeUsuario = usuario
+            let loginButton = document.getElementById ('loginAvatar');
+            loginButton.style.display = 'none';
+            let nombreUsuarioAvatar = document.getElementById ('nombreUsuario');
+             nombreUsuarioAvatar.style.display = 'block';
+             nombreUsuarioAvatar.innerHTML = usuario;
+             let logOutButton = document.getElementById ('logOut');
+             logOutButton.style.display= 'block';             
+        }
 
         if (tuCarrito != null) {
             this.carritoDeCompra = tuCarrito
             const badgeCart = document.getElementById('cargaProductos');
             badgeCart.innerHTML = this.carritoDeCompra.length;
         }
-
-
     }
-
-
 
     getCostoChapatita() {
         let total = 0;
@@ -165,24 +170,15 @@ class OrdenDeCompra {
             total = total + this.carritoDeCompra[i].precio;
         }
         return total;
-
     }
 
     vaciarCarrito() {
-
         this.carritoDeCompra = [];
         const badgeCart = document.getElementById('cargaProductos');
         badgeCart.innerHTML = this.carritoDeCompra.length;
         localStorage.setItem('tuCarrito', JSON.stringify(this.carritoDeCompra));
-
-
     }
-
-
-
-
 }
-
 
 
 
@@ -191,21 +187,34 @@ const orden = new OrdenDeCompra('');
 orden.recuperarCarrito();
 
 const botonCarrito = document.getElementById('carrito');
-botonCarrito.onclick = () => alert(orden.getCostoChapatita());
+botonCarrito.onclick = () => alert(orden.getCostoChapatita(),
+window.location.href = './flujoCompra.html');
+
+
 
 
 let carritoVacio = document.getElementById('vaciarCarrito');
 carritoVacio.onclick = () => {
     orden.vaciarCarrito()
-    alert('Vaciaste tu carrito de compra');
+    Swal.fire({
+        title: 'Estas seguro?',
+        text: "Se eliminaran todos tus productos del carrito",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Si, eliminarlo!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire(
+            'Eliminado!',
+            'Tus productos fueron eliminados',
+            'success'
+          )
+        }
+      })
+    
 }
-
-
-
-localStorage.setItem('usuario', (this.nombreDeUsuario));
-let usuario = localStorage.getItem ('usuario');
-
-
 
 
 function setElementOnClick(id, clickear) {
@@ -215,7 +224,6 @@ function setElementOnClick(id, clickear) {
 
 }
 
-
 setElementOnClick ('login',() => { 
     window.location.href = './login.html'
 } ) ;
@@ -223,7 +231,17 @@ setElementOnClick ('login',() => {
 
 setElementOnClick('search', () => alert('hiciste click'));
 
+setElementOnClick('logOut', () => {
+    localStorage.removeItem ('usuario');
+    window.location.reload ();
+}
+)
 
+setElementOnClick ('finalizePurchase' , () => {
+    window.location.href = './flujoCompra.html'
+}
+
+)
 
 
 function setElementOnKeyUp(id, pressKey) {
@@ -263,7 +281,13 @@ const datos = () => {
         
           })
     } else {
-        alert('Mail correcto');
+        Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Mail correcto',
+            showConfirmButton: false,
+            timer: 1500
+          })
 
     }
 
@@ -290,13 +314,6 @@ const searchOnClick = () => {
 
 }
 
-
-const create = () => {
-    window.location.href = './createAccount.html'
-}
-
-
-setElementOnClick ('createAccount',create);
 
 setElementOnClick('search', searchOnClick);
 
